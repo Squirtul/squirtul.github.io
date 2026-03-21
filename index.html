@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vatlog</title>
+<title>VATLOG — ATC Data Viewer</title>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -573,15 +573,15 @@ function statBoxes(rows) {
 
   return `<div class="stats-row">
     <div class="stat-box">
-      <div class="stat-label">Entries</div>
-      <div class="stat-val">${nonZero.length}</div>
+      <div class="stat-label">Total Count</div>
+      <div class="stat-val">${totalN}</div>
     </div>
     <div class="stat-box">
-      <div class="stat-label">Global Avg</div>
+      <div class="stat-label">Full Average</div>
       <div class="stat-val">${globalAvg.toFixed(1)}</div>
     </div>
     ${peak ? `<div class="stat-box">
-      <div class="stat-label">Peak</div>
+      <div class="stat-label">Peak — ${peak.key}</div>
       <div class="stat-val">${peak.average.toFixed(1)}</div>
     </div>` : ''}
   </div>`;
