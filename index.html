@@ -548,7 +548,7 @@ function buildTable(rows, colALabel) {
       <td class="col-key">${r.key}</td>
       <td class="col-bar"><div class="bar-outer"><div class="bar-inner" data-pct="${pct.toFixed(1)}"></div></div></td>
       <td class="col-avg">${r.average ? r.average.toFixed(2) : '—'}</td>
-      <td class="col-n">${r.count ? `n=${r.count}` : ''}</td>
+      <td class="col-n">${r.count ? `${r.count}` : ''}</td>
     `;
     tbody.appendChild(tr);
   });
@@ -573,7 +573,7 @@ function statBoxes(rows) {
 
   return `<div class="stats-row">
     <div class="stat-box">
-      <div class="stat-label">Total Count</div>
+      <div class="stat-label">Samples Taken</div>
       <div class="stat-val">${totalN}</div>
     </div>
     <div class="stat-box">
