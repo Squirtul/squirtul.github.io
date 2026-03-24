@@ -528,7 +528,7 @@ function errorMsg(container, err) {
 // ── Bar chart helpers ─────────────────────────────────────────────────────
 function buildTable(rows, colALabel) {
   // rows: [{key, average, count}]
-  const maxAvg = Math.max(...rows.map(r => r.average || 0), 0.01);
+  const maxAvg = 20.5;
 
   const tbl = document.createElement('table');
   tbl.className = 'data-table';
