@@ -508,12 +508,7 @@ async function fetchLogs() {
   return data;
 }
 
-function setStatus(live) {
-  const dot = document.getElementById('statusDot');
-  const txt = document.getElementById('statusText');
-  dot.className = 'status-dot' + (live ? ' live' : '');
-  txt.textContent = live ? 'CONNECTED' : 'OFFLINE';
-}
+function setStatus(live) {}
 
 function loading(container) {
   container.innerHTML = `<div class="loading-wrap"><div class="spinner"></div>FETCHING DATA…</div>`;
