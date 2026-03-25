@@ -8,17 +8,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --amber: #354dc4;
-    --amber-dim: #2a3580;
-    --amber-glow: rgba(53, 77, 196,0.12);
-    --amber-faint: rgba(53, 77, 196,0.06);
-    --green: #5ec47a;
-    --bg: #0e0e10;
-    --bg2: #141418;
-    --bg3: #1a1a1f;
-    --border: rgba(53, 77, 196,0.18);
-    --text: #9a9aaa;
-    --text-dim: #4a4a5a;
+    --amber: #2f45b8;
+    --amber-dim: #5068d0;
+    --amber-glow: rgba(47, 69, 184, 0.12);
+    --amber-faint: rgba(47, 69, 184, 0.06);
+    --green: #2a9e55;
+    --bg: #ffffff;
+    --bg2: #f0f4ff;
+    --bg3: #e4eaff;
+    --border: rgba(47, 69, 184, 0.2);
+    --text: #2a2d4a;
+    --text-dim: #8890b8;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -42,7 +42,7 @@
     position: sticky;
     top: 0;
     z-index: 100;
-    box-shadow: 0 2px 18px rgba(0,0,0,0.4);
+    box-shadow: 0 2px 18px rgba(47, 69, 184, 0.1);
   }
 
   .logo {
@@ -163,7 +163,7 @@
     cursor: pointer;
     appearance: none;
     -webkit-appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%231e2d6e'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%232f45b8'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 12px center;
     transition: border-color 0.2s, box-shadow 0.2s;
@@ -176,7 +176,7 @@
     box-shadow: 0 0 10px var(--amber-glow);
   }
 
-  select option { background: #141418; }
+  select option { background: #f0f4ff; }
 
   .btn {
     font-family: 'Rajdhani', sans-serif;
@@ -261,7 +261,7 @@
   .data-table td {
     font-size: 0.85rem;
     padding: 7px 14px;
-    border-bottom: 1px solid rgba(53,77,196,0.07);
+    border-bottom: 1px solid rgba(47, 69, 184, 0.07);
     transition: background 0.15s;
     letter-spacing: 0.05em;
   }
@@ -280,7 +280,7 @@
 
   .bar-outer {
     height: 6px;
-    background: rgba(53, 77, 196,0.1);
+    background: rgba(47, 69, 184, 0.1);
     border-radius: 4px;
     overflow: hidden;
     min-width: 60px;
@@ -434,7 +434,7 @@
   pineapplecrazyav@gmail.com  |  Reach out!
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const API_BASE = "https://vatlog-api-production.up.railway.app";
 
 const FIRS = [
@@ -647,18 +647,4 @@ document.getElementById('loadTime').addEventListener('click', async () => {
     container.innerHTML = `
       <div class="result-header">
         <div class="result-title">${time.slice(0,2)}:${time.slice(2)} UTC</div>
-        <div class="result-meta">ALL FIRS · ${rows.filter(r=>r.count).length} WITH DATA</div>
-      </div>
-      ${statBoxes(rows)}
-    `;
-    container.appendChild(buildTable(rows, 'FIR'));
-
-  } catch(e) {
-    errorMsg(container, e);
-  } finally {
-    btn.disabled = false;
-  }
-});
-</script>
-</body>
-</html>
+        <div class="result-meta">ALL FIRS · ${rows.filter(r=>r.count).le
