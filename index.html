@@ -389,6 +389,113 @@
     text-shadow: 0 0 18px rgba(47, 69, 184, 0.25);
     line-height: 1;
   }
+
+  /* ── Heatmap ── */
+  .heatmap-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+    animation: fadeIn 0.4s ease 0.15s both;
+    flex-wrap: wrap;
+  }
+ 
+  .heatmap-wrap {
+    overflow-x: auto;
+    animation: fadeIn 0.4s ease;
+    padding-bottom: 12px;
+  }
+ 
+  .heatmap-table {
+    border-collapse: collapse;
+    font-size: 0.62rem;
+    letter-spacing: 0.04em;
+  }
+ 
+  .heatmap-table th {
+    font-family: 'Share Tech Mono', monospace;
+    font-weight: 400;
+    color: var(--text-dim);
+    padding: 0;
+    text-align: center;
+    white-space: nowrap;
+  }
+ 
+  /* time slot header cells */
+  .heatmap-table thead th {
+    font-size: 0.58rem;
+    padding: 0 1px 6px;
+    min-width: 15px;
+  }
+ 
+  /* FIR label column */
+  .hm-fir-label {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--text);
+    text-align: right !important;
+    padding-right: 10px !important;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: color 0.15s;
+  }
+  .hm-fir-label:hover { color: var(--amber); }
+ 
+  .hm-cell {
+    width: 15px;
+    height: 17px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: transform 0.1s, outline 0.1s;
+    outline: 1.5px solid transparent;
+    position: relative;
+  }
+  .hm-cell:hover {
+    transform: scale(1.35);
+    outline-color: var(--amber);
+    z-index: 10;
+  }
+ 
+  /* tooltip */
+  .hm-tooltip {
+    position: fixed;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    padding: 7px 12px;
+    border-radius: 6px;
+    pointer-events: none;
+    z-index: 9999;
+    display: none;
+    box-shadow: 0 4px 18px rgba(47,69,184,0.15);
+    white-space: nowrap;
+  }
+  .hm-tooltip .tt-fir  { color: var(--amber); font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 0.85rem; }
+  .hm-tooltip .tt-time { color: var(--text-dim); font-size: 0.65rem; margin-bottom: 4px; }
+  .hm-tooltip .tt-avg  { font-size: 0.8rem; }
+  .hm-tooltip .tt-n    { color: var(--text-dim); font-size: 0.65rem; }
+ 
+  .hm-legend {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    letter-spacing: 0.12em;
+    margin-top: 18px;
+  }
+  .hm-legend-bar {
+    width: 140px;
+    height: 8px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #f0f4ff, #93aef5, #2f45b8);
+    border: 1px solid var(--border);
+  }
 </style>
 </head>
 <body>
@@ -406,6 +513,7 @@
   <div class="tabs">
     <button class="tab active" data-tab="by-fir">View by FIR</button>
     <button class="tab" data-tab="by-time">View by Time</button>
+    <button class="tab" data-tab="heatmap">Heatmap</button>
   </div>
 
   <!-- BY FIR -->
@@ -427,6 +535,22 @@
     </div>
     <div id="timeResults"></div>
   </div>
+
+  <div class="panel" id="panel-heatmap">
+  <div class="heatmap-controls">
+    <button class="btn" id="loadHeatmap">LOAD HEATMAP</button>
+    <span style="font-size:0.68rem;letter-spacing:0.15em;color:var(--text-dim);">
+      ALL FIRS · ALL TIME SLOTS · COLOUR = AVG CONTROLLERS ONLINE
+    </span>
+  </div>
+  <div id="heatmapResults"></div>
+  <div class="hm-tooltip" id="hmTooltip">
+    <div class="tt-fir" id="ttFir"></div>
+    <div class="tt-time" id="ttTime"></div>
+    <div class="tt-avg" id="ttAvg"></div>
+    <div class="tt-n" id="ttN"></div>
+  </div>
+</div>
 
 </main>
 
@@ -659,6 +783,146 @@ document.getElementById('loadTime').addEventListener('click', async () => {
     btn.disabled = false;
   }
 });
+</script>
+<script>
+(function () {
+  const MAX_AVG = 20;
+ 
+  // Colour scale: 0 → white/bg, mid → soft blue, max → brand blue
+  function cellColor(avg) {
+    if (!avg) return 'var(--bg3)';
+    const t = Math.min(avg / MAX_AVG, 1);
+    // Interpolate: #f0f4ff (240,244,255) → #2f45b8 (47,69,184)
+    const r = Math.round(240 + (47  - 240) * t);
+    const g = Math.round(244 + (69  - 244) * t);
+    const b = Math.round(255 + (184 - 255) * t);
+    return `rgb(${r},${g},${b})`;
+  }
+ 
+  function buildHeatmap(entries) {
+    const container = document.getElementById('heatmapResults');
+ 
+    // Build lookup: "fir|time" → {average, count}
+    const lookup = {};
+    entries.forEach(e => { lookup[`${e.fir}|${e.time}`] = e; });
+ 
+    const table = document.createElement('table');
+    table.className = 'heatmap-table';
+ 
+    // ── THEAD: time labels (every 2 hours to keep it readable) ──
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+    headerRow.innerHTML = '<th></th>'; // blank corner
+    VALID_TIMES.forEach((t, i) => {
+      const th = document.createElement('th');
+      // show label every 4 slots (= every 2 hours)
+      th.textContent = (i % 4 === 0) ? t.slice(0, 2) : '';
+      headerRow.appendChild(th);
+    });
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+ 
+    // ── TBODY: one row per FIR ──
+    const tbody = document.createElement('tbody');
+    FIRS.forEach(fir => {
+      const tr = document.createElement('tr');
+ 
+      // FIR label
+      const th = document.createElement('th');
+      th.className = 'hm-fir-label';
+      th.textContent = fir.toUpperCase();
+      th.title = FIR_NAMES[fir] || fir.toUpperCase();
+      th.addEventListener('click', () => {
+        // Jump to By FIR tab with this FIR selected
+        document.getElementById('firSelect').value = fir;
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        document.querySelector('[data-tab="by-fir"]').classList.add('active');
+        document.getElementById('panel-by-fir').classList.add('active');
+        document.getElementById('loadFir').click();
+      });
+      tr.appendChild(th);
+ 
+      // One cell per time slot
+      VALID_TIMES.forEach(t => {
+        const td = document.createElement('td');
+        const key = `${fir}|${t}`;
+        const d = lookup[key];
+        const avg = d && d.count > 0 ? d.average : 0;
+        td.className = 'hm-cell';
+        td.style.background = cellColor(avg);
+        td.dataset.fir  = fir;
+        td.dataset.time = t;
+        td.dataset.avg  = avg ? avg.toFixed(2) : '0';
+        td.dataset.n    = d ? d.count : '0';
+        tr.appendChild(td);
+      });
+ 
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+ 
+    // ── Legend ──
+    container.innerHTML = '';
+    const wrap = document.createElement('div');
+    wrap.className = 'heatmap-wrap';
+    wrap.appendChild(table);
+    container.appendChild(wrap);
+    container.insertAdjacentHTML('beforeend', `
+      <div class="hm-legend">
+        <span>0</span>
+        <div class="hm-legend-bar"></div>
+        <span>${MAX_AVG}+ controllers</span>
+      </div>
+    `);
+ 
+    // ── Tooltip ──
+    const tooltip = document.getElementById('hmTooltip');
+    table.addEventListener('mousemove', e => {
+      const cell = e.target.closest('.hm-cell');
+      if (!cell) { tooltip.style.display = 'none'; return; }
+      const fir  = cell.dataset.fir;
+      const time = cell.dataset.time;
+      const avg  = parseFloat(cell.dataset.avg);
+      const n    = parseInt(cell.dataset.n);
+      document.getElementById('ttFir').textContent  = `${fir.toUpperCase()}${FIR_NAMES[fir] ? ' — ' + FIR_NAMES[fir] : ''}`;
+      document.getElementById('ttTime').textContent = `${time.slice(0,2)}:${time.slice(2)} UTC`;
+      document.getElementById('ttAvg').textContent  = avg ? `Avg: ${avg.toFixed(2)} controllers` : 'No data';
+      document.getElementById('ttN').textContent    = n   ? `${n} samples` : '';
+      tooltip.style.display = 'block';
+      tooltip.style.left = (e.clientX + 14) + 'px';
+      tooltip.style.top  = (e.clientY - 10) + 'px';
+    });
+    table.addEventListener('mouseleave', () => { tooltip.style.display = 'none'; });
+ 
+    // Click cell → jump to By Time tab
+    table.addEventListener('click', e => {
+      const cell = e.target.closest('.hm-cell');
+      if (!cell) return;
+      document.getElementById('timeSelect').value = cell.dataset.time;
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.querySelector('[data-tab="by-time"]').classList.add('active');
+      document.getElementById('panel-by-time').classList.add('active');
+      document.getElementById('loadTime').click();
+    });
+  }
+ 
+  document.getElementById('loadHeatmap').addEventListener('click', async () => {
+    const btn = document.getElementById('loadHeatmap');
+    const container = document.getElementById('heatmapResults');
+    btn.disabled = true;
+    container.innerHTML = `<div class="loading-wrap"><div class="spinner"></div>BUILDING HEATMAP…</div>`;
+    try {
+      const entries = await fetchLogs();
+      buildHeatmap(entries);
+    } catch(e) {
+      errorMsg(container, e);
+    } finally {
+      btn.disabled = false;
+    }
+  });
+})();
 </script>
 </body>
 </html>
