@@ -8,21 +8,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --amber: #354dc4;
-    --amber-dim: #2a3580;
-    --amber-glow: rgba(53, 77, 196,0.12);
-    --amber-faint: rgba(53, 77, 196,0.06);
-    --green: #5ec47a;
-    --bg: #0e0e10;
-    --bg2: #141418;
-    --bg3: #1a1a1f;
-    --border: rgba(53, 77, 196,0.18);
-    --text: #9a9aaa;
-    --text-dim: #4a4a5a;
+    --amber: #2f45b8;
+    --amber-dim: #5068d0;
+    --amber-glow: rgba(47, 69, 184, 0.12);
+    --amber-faint: rgba(47, 69, 184, 0.06);
+    --green: #2a9e55;
+    --bg: #ffffff;
+    --bg2: #f0f4ff;
+    --bg3: #e4eaff;
+    --border: rgba(47, 69, 184, 0.2);
+    --text: #2a2d4a;
+    --text-dim: #8890b8;
   }
-
+ 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
+ 
   body {
     background: var(--bg);
     color: var(--text);
@@ -30,7 +30,7 @@
     min-height: 100vh;
     overflow-x: hidden;
   }
-
+ 
   /* ─── HEADER ─── */
   header {
     border-bottom: 1px solid var(--border);
@@ -42,31 +42,31 @@
     position: sticky;
     top: 0;
     z-index: 100;
-    box-shadow: 0 2px 18px rgba(0,0,0,0.4);
+    box-shadow: 0 2px 18px rgba(47, 69, 184, 0.1);
   }
-
+ 
   .logo {
     display: flex;
     align-items: baseline;
     gap: 12px;
   }
-
+ 
   .logo-main {
     font-family: 'Rajdhani', sans-serif;
     font-weight: 700;
     font-size: 1.7rem;
     color: var(--amber);
     letter-spacing: 0.15em;
-    text-shadow: 0 0 28px rgba(53, 77, 196,0.3);
+    text-shadow: 0 0 28px rgba(47, 69, 184, 0.3);
   }
-
+ 
   .logo-sub {
     font-size: 0.68rem;
     color: var(--text-dim);
     letter-spacing: 0.2em;
     text-transform: uppercase;
   }
-
+ 
   .header-status {
     display: flex;
     align-items: center;
@@ -75,7 +75,7 @@
     letter-spacing: 0.12em;
     color: var(--text-dim);
   }
-
+ 
   .status-dot {
     width: 7px; height: 7px;
     border-radius: 50%;
@@ -89,19 +89,19 @@
     box-shadow: 0 0 6px var(--green);
     animation: pulse 2s infinite;
   }
-
+ 
   @keyframes pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.4; }
   }
-
+ 
   /* ─── MAIN ─── */
   main {
     max-width: 980px;
     margin: 0 auto;
     padding: 40px 24px 80px;
   }
-
+ 
   /* ─── TABS ─── */
   .tabs {
     display: flex;
@@ -110,7 +110,7 @@
     gap: 0;
     animation: fadeIn 0.5s ease 0.1s both;
   }
-
+ 
   .tab {
     font-family: 'Rajdhani', sans-serif;
     font-weight: 600;
@@ -126,15 +126,15 @@
     transition: color 0.2s, border-color 0.2s;
     margin-bottom: -1px;
   }
-
+ 
   .tab:hover { color: var(--amber); }
-
+ 
   .tab.active {
     color: var(--amber);
     border-bottom-color: var(--amber);
-    text-shadow: 0 0 12px rgba(53,77,196,0.5);
+    text-shadow: 0 0 12px rgba(47, 69, 184, 0.5);
   }
-
+ 
   /* ─── CONTROLS ─── */
   .controls {
     display: flex;
@@ -143,14 +143,14 @@
     margin-bottom: 32px;
     animation: fadeIn 0.4s ease 0.15s both;
   }
-
+ 
   label {
     font-size: 0.68rem;
     letter-spacing: 0.2em;
     color: var(--text-dim);
     text-transform: uppercase;
   }
-
+ 
   select {
     background: var(--bg2);
     border: 1px solid var(--border);
@@ -163,21 +163,21 @@
     cursor: pointer;
     appearance: none;
     -webkit-appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%231e2d6e'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%232f45b8'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 12px center;
     transition: border-color 0.2s, box-shadow 0.2s;
     min-width: 160px;
     border-radius: 6px;
   }
-
+ 
   select:focus {
     border-color: var(--amber);
     box-shadow: 0 0 10px var(--amber-glow);
   }
-
-  select option { background: #141418; }
-
+ 
+  select option { background: #f0f4ff; }
+ 
   .btn {
     font-family: 'Rajdhani', sans-serif;
     font-weight: 700;
@@ -192,27 +192,27 @@
     border-radius: 6px;
     transition: background 0.2s, box-shadow 0.2s, color 0.2s;
   }
-
+ 
   .btn:hover {
     background: var(--amber-glow);
     box-shadow: 0 0 12px var(--amber-glow);
   }
-
+ 
   .btn:active { transform: translateY(1px); }
-
+ 
   .btn:disabled {
     opacity: 0.35;
     cursor: not-allowed;
     box-shadow: none;
     background: none;
   }
-
+ 
   /* ─── RESULTS ─── */
   .results-wrap {
     animation: fadeIn 0.4s ease;
     min-height: 100px;
   }
-
+ 
   .result-header {
     display: flex;
     justify-content: space-between;
@@ -221,28 +221,28 @@
     padding-bottom: 10px;
     border-bottom: 1px solid var(--border);
   }
-
+ 
   .result-title {
     font-family: 'Rajdhani', sans-serif;
     font-weight: 700;
     font-size: 1.15rem;
     letter-spacing: 0.15em;
     color: var(--amber);
-    text-shadow: 0 0 16px rgba(53, 77, 196,0.25);
+    text-shadow: 0 0 16px rgba(47, 69, 184, 0.25);
   }
-
+ 
   .result-meta {
     font-size: 0.65rem;
     letter-spacing: 0.15em;
     color: var(--text-dim);
   }
-
+ 
   /* ─── TABLE ─── */
   .data-table {
     width: 100%;
     border-collapse: collapse;
   }
-
+ 
   .data-table th {
     font-family: 'Rajdhani', sans-serif;
     font-weight: 600;
@@ -254,38 +254,38 @@
     padding: 6px 14px 10px;
     border-bottom: 1px solid var(--border);
   }
-
+ 
   .data-table th:last-child,
   .data-table td:last-child { text-align: right; }
-
+ 
   .data-table td {
     font-size: 0.85rem;
     padding: 7px 14px;
-    border-bottom: 1px solid rgba(53,77,196,0.07);
+    border-bottom: 1px solid rgba(47, 69, 184, 0.07);
     transition: background 0.15s;
     letter-spacing: 0.05em;
   }
-
+ 
   .data-table tr:hover td { background: var(--amber-faint); }
-
+ 
   .data-table .col-key {
     color: var(--amber);
     width: 120px;
   }
-
+ 
   .data-table .col-bar {
     width: 100%;
     padding-right: 20px;
   }
-
+ 
   .bar-outer {
     height: 6px;
-    background: rgba(53, 77, 196,0.1);
+    background: rgba(47, 69, 184, 0.1);
     border-radius: 4px;
     overflow: hidden;
     min-width: 60px;
   }
-
+ 
   .bar-inner {
     height: 100%;
     background: linear-gradient(90deg, var(--amber-dim), var(--amber));
@@ -293,23 +293,23 @@
     transition: width 0.6s ease;
     width: 0;
   }
-
+ 
   .col-avg {
     color: var(--amber);
     font-size: 0.9rem;
     min-width: 70px;
     text-align: right !important;
   }
-
+ 
   .col-n {
     color: var(--text-dim);
     font-size: 0.75rem;
     min-width: 80px;
   }
-
+ 
   .zero-row td { color: var(--text-dim); }
   .zero-row .col-avg { color: var(--text-dim); }
-
+ 
   /* ─── MESSAGES ─── */
   .msg {
     padding: 24px 0;
@@ -318,12 +318,12 @@
     letter-spacing: 0.15em;
     color: var(--text-dim);
   }
-
+ 
   .msg.error {
     color: #d44;
     text-shadow: 0 0 10px rgba(200,50,50,0.3);
   }
-
+ 
   .loading-wrap {
     display: flex;
     align-items: center;
@@ -334,7 +334,7 @@
     font-size: 0.75rem;
     letter-spacing: 0.2em;
   }
-
+ 
   .spinner {
     width: 18px; height: 18px;
     border: 2px solid var(--amber-dim);
@@ -342,20 +342,20 @@
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
   }
-
+ 
   @keyframes spin { to { transform: rotate(360deg); } }
-
+ 
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(8px); }
     to   { opacity: 1; transform: translateY(0); }
   }
-
+ 
   /* ─── PANEL ─── */
   .panel {
     display: none;
   }
   .panel.active { display: block; }
-
+ 
   /* ─── summary stats ─── */
   .stats-row {
     display: flex;
@@ -363,7 +363,7 @@
     margin-bottom: 28px;
     flex-wrap: wrap;
   }
-
+ 
   .stat-box {
     border: 1px solid var(--border);
     background: var(--bg2);
@@ -372,7 +372,7 @@
     position: relative;
     border-radius: 8px;
   }
-
+ 
   .stat-label {
     font-size: 0.6rem;
     letter-spacing: 0.25em;
@@ -380,13 +380,13 @@
     text-transform: uppercase;
     margin-bottom: 6px;
   }
-
+ 
   .stat-val {
     font-family: 'Rajdhani', sans-serif;
     font-size: 1.6rem;
     font-weight: 700;
     color: var(--amber);
-    text-shadow: 0 0 18px rgba(53, 77, 196,0.25);
+    text-shadow: 0 0 18px rgba(47, 69, 184, 0.25);
     line-height: 1;
   }
 </style>
