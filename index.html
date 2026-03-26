@@ -791,7 +791,7 @@ document.getElementById('loadTime').addEventListener('click', async () => {
   // Colour scale: 0 → white/bg, mid → soft blue, max → brand blue
   function cellColor(avg) {
     if (!avg) return 'var(--bg3)';
-    const t = Math.pow(linear, 0.4);
+    const t = Math.pow(Math.min(avg / MAX_AVG, 1), 0.4);
     const r = Math.round(240 + (47  - 240) * t);
     const g = Math.round(244 + (69  - 244) * t);
     const b = Math.round(255 + (184 - 255) * t);
