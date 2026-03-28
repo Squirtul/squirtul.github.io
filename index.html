@@ -921,4 +921,20 @@ document.getElementById('loadTime').addEventListener('click', async () => {
     const btn = document.getElementById('loadHeatmap');
     const container = document.getElementById('heatmapResults');
     btn.disabled = true;
-    container.innerHTML = `<div class="loading-wrap"><div class="spinner"></div>BUILDI
+    container.innerHTML = `<div class="loading-wrap"><div class="spinner"></div>BUILDING HEATMAP…</div>`;
+
+    try {
+      const entries = await fetchLogs();
+      setStatus(true);
+      buildHeatmap(entries);
+    } catch(e) {
+      errorMsg(container, e);
+    } finally {
+      btn.disabled = false;
+    }
+  });
+
+})();
+</script>
+</body>
+</html>
