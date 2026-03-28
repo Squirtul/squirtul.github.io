@@ -858,8 +858,9 @@ document.getElementById('loadTime').addEventListener('click', async () => {
         const key = `${fir}|${t}`;
         const d = lookup[key];
         const avg = d && d.count > 0 ? d.average : 0;
-        td.className = avg === 0 ? 'hm-cell hm-cell--zero' : 'hm-cell';
-        td.style.background = avg === 0 ? '' : cellColor(avg);
+        const noSamples = !d || d.count === 0;
+        td.className = noSamples ? 'hm-cell hm-cell--zero' : 'hm-cell';
+        td.style.background = noSamples ? '' : cellColor(avg);
         td.dataset.fir  = fir;
         td.dataset.time = t;
         td.dataset.avg  = avg ? avg.toFixed(2) : '0';
