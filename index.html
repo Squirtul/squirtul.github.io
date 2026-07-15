@@ -3,939 +3,179 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vatlog</title>
-<link rel="icon" type="image/x-icon" href="logo.ico">
-<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
+<title>Brief</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --amber: #2f45b8;
-    --amber-dim: #5068d0;
-    --amber-glow: rgba(47, 69, 184, 0.12);
-    --amber-faint: rgba(47, 69, 184, 0.06);
-    --green: #2a9e55;
-    --bg: #ffffff;
-    --bg2: #f0f4ff;
-    --bg3: #e4eaff;
-    --border: rgba(47, 69, 184, 0.2);
-    --text: #2a2d4a;
-    --text-dim: #8890b8;
-  }
- 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
- 
+  * { margin:0; padding:0; box-sizing:border-box; }
+
   body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Share Tech Mono', monospace;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
- 
-  /* ─── HEADER ─── */
-  header {
-    border-bottom: 1px solid var(--border);
-    padding: 18px 32px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: var(--bg2);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 18px rgba(47, 69, 184, 0.1);
-  }
- 
-  .logo {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-  }
- 
-  .logo-main {
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700;
-    font-size: 1.7rem;
-    color: var(--amber);
-    letter-spacing: 0.15em;
-    text-shadow: 0 0 28px rgba(47, 69, 184, 0.3);
-  }
- 
-  .logo-sub {
-    font-size: 0.68rem;
-    color: var(--text-dim);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-  }
- 
-  .header-status {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
-    color: var(--text-dim);
-  }
- 
-  .status-dot {
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: var(--amber-dim);
-    display: inline-block;
-    margin-right: 6px;
-    transition: background 0.4s, box-shadow 0.4s;
-  }
-  .status-dot.live {
-    background: var(--green);
-    box-shadow: 0 0 6px var(--green);
-    animation: pulse 2s infinite;
-  }
- 
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
-  }
- 
-  /* ─── MAIN ─── */
-  main {
-    max-width: 980px;
-    margin: 0 auto;
-    padding: 40px 24px 80px;
-  }
- 
-  /* ─── TABS ─── */
-  .tabs {
-    display: flex;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 36px;
-    gap: 0;
-    animation: fadeIn 0.5s ease 0.1s both;
-  }
- 
-  .tab {
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 600;
-    font-size: 0.85rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    background: none;
-    border: none;
-    border-bottom: 2px solid transparent;
-    padding: 12px 28px 11px;
-    cursor: pointer;
-    transition: color 0.2s, border-color 0.2s;
-    margin-bottom: -1px;
-  }
- 
-  .tab:hover { color: var(--amber); }
- 
-  .tab.active {
-    color: var(--amber);
-    border-bottom-color: var(--amber);
-    text-shadow: 0 0 12px rgba(47, 69, 184, 0.5);
-  }
- 
-  /* ─── CONTROLS ─── */
-  .controls {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    margin-bottom: 32px;
-    animation: fadeIn 0.4s ease 0.15s both;
-  }
- 
-  label {
-    font-size: 0.68rem;
-    letter-spacing: 0.2em;
-    color: var(--text-dim);
-    text-transform: uppercase;
-  }
- 
-  select {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    color: var(--amber);
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.88rem;
-    padding: 9px 32px 9px 14px;
-    letter-spacing: 0.08em;
-    outline: none;
-    cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%232f45b8'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 12px center;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    min-width: 160px;
-    border-radius: 6px;
-  }
- 
-  select:focus {
-    border-color: var(--amber);
-    box-shadow: 0 0 10px var(--amber-glow);
-  }
- 
-  select option { background: #f0f4ff; }
- 
-  .btn {
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700;
-    font-size: 0.8rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    background: none;
-    border: 1px solid var(--amber);
-    color: var(--amber);
-    padding: 9px 24px;
-    cursor: pointer;
-    border-radius: 6px;
-    transition: background 0.2s, box-shadow 0.2s, color 0.2s;
-  }
- 
-  .btn:hover {
-    background: var(--amber-glow);
-    box-shadow: 0 0 12px var(--amber-glow);
-  }
- 
-  .btn:active { transform: translateY(1px); }
- 
-  .btn:disabled {
-    opacity: 0.35;
-    cursor: not-allowed;
-    box-shadow: none;
-    background: none;
-  }
- 
-  /* ─── RESULTS ─── */
-  .results-wrap {
-    animation: fadeIn 0.4s ease;
-    min-height: 100px;
-  }
- 
-  .result-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 18px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--border);
-  }
- 
-  .result-title {
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700;
-    font-size: 1.15rem;
-    letter-spacing: 0.15em;
-    color: var(--amber);
-    text-shadow: 0 0 16px rgba(47, 69, 184, 0.25);
-  }
- 
-  .result-meta {
-    font-size: 0.65rem;
-    letter-spacing: 0.15em;
-    color: var(--text-dim);
-  }
- 
-  /* ─── TABLE ─── */
-  .data-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
- 
-  .data-table th {
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 600;
-    font-size: 0.65rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    text-align: left;
-    padding: 6px 14px 10px;
-    border-bottom: 1px solid var(--border);
-  }
- 
-  .data-table th:last-child,
-  .data-table td:last-child { text-align: right; }
- 
-  .data-table td {
-    font-size: 0.85rem;
-    padding: 7px 14px;
-    border-bottom: 1px solid rgba(47, 69, 184, 0.07);
-    transition: background 0.15s;
-    letter-spacing: 0.05em;
-  }
- 
-  .data-table tr:hover td { background: var(--amber-faint); }
- 
-  .data-table .col-key {
-    color: var(--amber);
-    width: 120px;
-  }
- 
-  .data-table .col-bar {
-    width: 100%;
-    padding-right: 20px;
-  }
- 
-  .bar-outer {
-    height: 6px;
-    background: rgba(47, 69, 184, 0.1);
-    border-radius: 4px;
-    overflow: hidden;
-    min-width: 60px;
-  }
- 
-  .bar-inner {
-    height: 100%;
-    background: linear-gradient(90deg, var(--amber-dim), var(--amber));
-    border-radius: 4px;
-    transition: width 0.6s ease;
-    width: 0;
-  }
- 
-  .col-avg {
-    color: var(--amber);
-    font-size: 0.9rem;
-    min-width: 70px;
-    text-align: right !important;
-  }
- 
-  .col-n {
-    color: var(--text-dim);
-    font-size: 0.75rem;
-    min-width: 80px;
-  }
- 
-  .zero-row td { color: var(--text-dim); }
-  .zero-row .col-avg { color: var(--text-dim); }
- 
-  /* ─── MESSAGES ─── */
-  .msg {
-    padding: 24px 0;
-    text-align: center;
-    font-size: 0.78rem;
-    letter-spacing: 0.15em;
-    color: var(--text-dim);
-  }
- 
-  .msg.error {
-    color: #d44;
-    text-shadow: 0 0 10px rgba(200,50,50,0.3);
-  }
- 
-  .loading-wrap {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 14px;
-    padding: 32px 0;
-    color: var(--text-dim);
-    font-size: 0.75rem;
-    letter-spacing: 0.2em;
-  }
- 
-  .spinner {
-    width: 18px; height: 18px;
-    border: 2px solid var(--amber-dim);
-    border-top-color: var(--amber);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-  }
- 
-  @keyframes spin { to { transform: rotate(360deg); } }
- 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
- 
-  /* ─── PANEL ─── */
-  .panel {
-    display: none;
-  }
-  .panel.active { display: block; }
- 
-  /* ─── summary stats ─── */
-  .stats-row {
-    display: flex;
-    gap: 24px;
-    margin-bottom: 28px;
-    flex-wrap: wrap;
-  }
- 
-  .stat-box {
-    border: 1px solid var(--border);
-    background: var(--bg2);
-    padding: 14px 20px;
-    min-width: 130px;
-    position: relative;
-    border-radius: 8px;
-  }
- 
-  .stat-label {
-    font-size: 0.6rem;
-    letter-spacing: 0.25em;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
- 
-  .stat-val {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: var(--amber);
-    text-shadow: 0 0 18px rgba(47, 69, 184, 0.25);
-    line-height: 1;
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    color: #222;
+    background: #fff;
   }
 
-  /* ── Heatmap ── */
-  .heatmap-controls {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 28px;
-    animation: fadeIn 0.4s ease 0.15s both;
-    flex-wrap: wrap;
+  header {
+    display:flex;
+    justify-content:flex-end;
+    padding:20px;
   }
- 
-  .heatmap-wrap {
-    overflow-x: auto;
-    animation: fadeIn 0.4s ease;
-    padding-bottom: 12px;
+
+  .burger {
+    background:none;
+    border:none;
+    cursor:pointer;
+    width:30px;
+    height:20px;
+    position:relative;
   }
- 
-  .heatmap-table {
-    border-collapse: collapse;
-    font-size: 0.62rem;
-    letter-spacing: 0.04em;
+
+  .burger span {
+    position:absolute;
+    left:0; right:0;
+    height:2px;
+    background:#222;
   }
- 
-  .heatmap-table th {
-    font-family: 'Share Tech Mono', monospace;
-    font-weight: 400;
-    color: var(--text-dim);
-    padding: 0;
-    text-align: center;
-    white-space: nowrap;
+  .burger span:nth-child(1){ top:0; }
+  .burger span:nth-child(2){ top:9px; }
+  .burger span:nth-child(3){ top:18px; }
+
+  nav {
+    display:none;
+    flex-direction:column;
+    padding:20px;
+    position:fixed;
+    top:0; left:0;
+    width:100%;
+    height:100%;
+    background:#fff;
+    opacity:0;
+    transition:opacity 0.15s ease;
   }
- 
-  /* time slot header cells */
-  .heatmap-table thead th {
-    font-size: 0.58rem;
-    padding: 0 1px 6px;
-    min-width: 15px;
+  nav.open {
+    display:flex;
+    opacity:1;
   }
- 
-  /* FIR label column */
-  .hm-fir-label {
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 600;
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    color: var(--text);
-    text-align: right !important;
-    padding-right: 10px !important;
-    white-space: nowrap;
-    cursor: pointer;
-    transition: color 0.15s;
+
+  nav a {
+    color:#222;
+    text-decoration:none;
+    padding:10px 0;
   }
-  .hm-fir-label:hover { color: var(--amber); }
- 
-  .hm-cell {
-    width: 15px;
-    height: 17px;
-    border-radius: 2px;
-    cursor: pointer;
-    transition: transform 0.1s, outline 0.1s;
-    outline: 1.5px solid transparent;
-    position: relative;
+
+  .page {
+    display:none;
+    padding:20px 40px 60px;
   }
-  .hm-cell--zero {
-    background-color: #b0b6c8 !important;
-    background-image: repeating-linear-gradient(
-      45deg,
-      transparent,
-      transparent 3px,
-      rgba(60, 65, 90, 0.45) 3px,
-      rgba(60, 65, 90, 0.45) 4px
-    ) !important;
-  }
-  .hm-cell:hover {
-    transform: scale(1.35);
-    outline-color: var(--amber);
-    z-index: 10;
-  }
- 
-  /* tooltip */
-  .hm-tooltip {
-    position: fixed;
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    color: var(--text);
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.08em;
-    padding: 7px 12px;
-    border-radius: 6px;
-    pointer-events: none;
-    z-index: 9999;
-    display: none;
-    box-shadow: 0 4px 18px rgba(47,69,184,0.15);
-    white-space: nowrap;
-  }
-  .hm-tooltip .tt-fir  { color: var(--amber); font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 0.85rem; }
-  .hm-tooltip .tt-time { color: var(--text-dim); font-size: 0.65rem; margin-bottom: 4px; }
-  .hm-tooltip .tt-avg  { font-size: 0.8rem; }
-  .hm-tooltip .tt-n    { color: var(--text-dim); font-size: 0.65rem; }
- 
-  .hm-legend {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 0.65rem;
-    color: var(--text-dim);
-    letter-spacing: 0.12em;
-    margin-top: 18px;
-  }
-  .hm-legend-bar {
-    width: 140px;
-    height: 8px;
-    border-radius: 4px;
-    background: linear-gradient(90deg, #f0f4ff, #93aef5, #2f45b8);
-    border: 1px solid var(--border);
-  }
+  .page.active { display:block; }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">
-    <span class="logo-main">VATLOG</span>
-    <span class="logo-sub">for vatsim control coverage</span>
-  </div>
+  <button class="burger" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </button>
 </header>
 
-<main>
+<nav id="nav">
+  <a href="#" onclick="goTo('home')">Home</a>
+  <a href="#" onclick="goTo('ebkt')">EBKT (Kortrijk)</a>
+</nav>
 
-  <!-- TABS -->
-  <div class="tabs">
-    <button class="tab active" data-tab="by-fir">View by FIR</button>
-    <button class="tab" data-tab="by-time">View by Time</button>
-    <button class="tab" data-tab="heatmap">Heatmap</button>
-  </div>
+<section class="page active" id="home">
+  <h1>Brief</h1><br><br>
+  <p>Welcome. View pilot briefings without the extra hassle.</p><br>
+  <p>A compilation of eAIPs and local procedures.</p>
+</section>
 
-  <!-- BY FIR -->
-  <div class="panel active" id="panel-by-fir">
-    <div class="controls">
-      <label for="firSelect">FIR</label>
-      <select id="firSelect"></select>
-      <button class="btn" id="loadFir">LOAD</button>
-    </div>
-    <div id="firResults"></div>
-  </div>
+<section class="page" id="ebkt">
+  <h1>EBKT - Kortrijk</h1><br><br>
+  <p>Both IFR and VFR flights are permitted at EBKT.</p><br>
+  <p>View <a href="https://ops.skeyes.be/html/belgocontrol_static/eaip/eAIP_Main/html/index-en-GB.html">All Charts</a>.</p><br><br>
+  <h2>Air Traffic Services</h2><br>
+  <p>Kortrijk is within <b>class G</b> airspace. It does not receive air traffic control (ATC) services.</p><br>
+  <p>Kortrijk is instead served by an <b>Aerodrome Flight Information Service</b> (AFIS). They will provide information, but separation is entirely pilots' responsibility.</p><br>
+  <p>Kortrijk Information (EBKT_I_TWR) is on the frequency <b>120.255</b>.</p><br><br>
+  <h2>Airspace</h2><br>
+  <p>EBKT is within a <b>RMZ/TMZ</b> (radio + transponder mandatory zone).</p><br>
+  <p>All aircraft therefore must be in contact with EBKT_I_TWR when within the RMZ/TMZ, and must have a transponder set to mode S (C on VATSIM).</p><br>
+  <p>EBMO (Moorsele)'s paradrop area partially covers the north side of the RMZ/TMZ. EBKT_I_TWR will inform if this area is active.</p><br>
+  <p>Restricted airspace <b>EBR25</b> covers parts of the approach onto runway 06. Pilots may fly through it to land at EBKT.</p><br><br>
+  <h2>Parking</h2><br>
+  <p>Apron 2 is the primary parking area. Stands 210 and 250 can facilitate aircraft with a wingspan of less than 36m. All other stands ending in a <b>1</b> or <b>3</b> require a wingspan less than 17m. All other stands ending in a <b>2</b> or <b>4</b> require a wingspan less than 24m.</p><br>
+  <p>Apron 1 is used for general aircraft. It has a max wingspan of 15m and cannot take jet nor turboprop aircraft.</p><br>
+  <p>Apron 3 is used for helicopters. It has a max wingspan of 15m and max D-value of 13m.</p><br>
+  <p>There are various hangars across the field. These are used by independent companies and flight schools and are to be used at pilot discretion.</p><br>
+  <p>View the <a href="https://ops.skeyes.be/html/belgocontrol_static/eaip/eAIP_Main/graphics/eAIP/EBKT_APDC01_v03.pdf">Parking Chart</a>.</p><br><br>
+  <h2>IFR Departure</h2><br>
+  <p>All IFR must be PBN (performance based navigation), as no conventional IFR is available.</p><br>
+  <p>IFR clearances are issued by EBBU_W_CTR but relayed by EBKT_I_TWR.</p><br>
+  <p>Cat A and B aircraft can expect an <b>A</b> departure from runway 24 and a C departure from runway 06.</p><br>
+  <p>Cat C aircraft can expect a <b>B</b> departure from runway 24 and a C departure from runway 06.</p><br>
+  <p>IFR departures climb to 3000ft, where they must contact EBBU_W_CTR for clearance to enter controlled airspace.</p><br>
+  <p>An IFR pickup when entering controlled airspace is possible.</p><br>
+  <p>Only 1 departure may be on a SID at one time.</p><br>
+  <p>Departures are manually handed off by EBKT_I_TWR.</p><br><br>
+  <h2>VFR Departure</h2><br>
+  <p>Aircraft must leave the RMZ/TMZ via the <b>mandatory</b> reporting points <b>N1, E1, S1 and W1</b>. They are also advised to use the <b>recommended</b> reporting points <b>N2, E2, S2 and W2</b>.</p><br>
+  <p>Departure routes via N and W conflict with IFR procedures. It is the pilots' responsibility to maintain separation.</p><br>
+  <p>Upon leaving the RMZ/TMZ, flight information is available with Brussels Information (EBBU_I_CTR) on <b>126.900</b>.</p><br><br>
+  <h2>Local VFR</h2><br>
+  <p>3 circuits are used at EBKT.</p><br>
+  <p>The <b>general</b> circuit is used by aircraft less than 2T. It is a left-hand pattern at 1000ft AMSL.</p><br>
+  <p>The <b>helicopter</b> circuit is used by helicopters. It is a right-hand pattern at 1000ft AMSL.</p><br>
+  <p>The <b>high performance</b> circuit is used by aircraft greater than 2T. It is always to the <b>south</b> of the field for both runways 06 and 24, at 1500ft AMSL.</p><br>
+  <p>To join the circuit, aircraft should proceed from either the <b>mandatory</b> or <b>recommended</b> reporting point (if applicable) to the downwind of their relevant circuit.</p><br>
+  <p>Aim not to fly overhead the signalling area.</p><br>
+  <p>Multiple circuits can and will be used simultaneously. While traffic information will be provided by EBKT_I_TWR, separation is ultimately pilots' discretion.</p><br><br>
+  <h2>Pushback</h2><br>
+  <p>All stands are taxi-out, hence no pushbacks are required.</p><br><br>
+  <h2>Taxi</h2><br>
+  <p>Ensure you are squawking <b>mode C</b> before requesting taxi information.</p><br>
+  <p>Aircraft are required to contact EBKT_I_TWR <b>prior</b> to taxi, where they'll be given relevant information on current traffic and conditions.</p><br>
+  <p>Taxi routing is done at pilot discretion.</p><br>
+  <p>It is mandatory to contact EBKT_I_TWR before lineup, before crossing the runway and when vacating the runway after both crossing <b>and</b> landing.</p><br>
+  <p>Aircraft with a wingspan of 24m or greater can only taxi via B, between B2 and B3. They must backtrack thereafter.</p><br>
+  <p>All aircraft must depart <b>full length</b>.</p><br><br>
+  <h2>IFR Arrival</h2><br>
+  <p>Aircraft must fly via <b>ARWEF</b> to begin all instrument approaches.</p><br>
+  <p>Pilots must report their ETO (estimated time over) ARWEF to EBKT_I_TWR at least 10 mins prior.</p><br>
+  <p>If with another controller, pilots must request their ETO ARWEF to be sent to EBKT_I_TWR, or request a frequency change. They may return to their original frequency after reporting to EBKT.</p><br>
+  <p>When leaving controlled airspace, aircraft must contact EBKT_I_TWR for information. Pilots may request radar-based information from EBBU_I_CTR on <b>126.900</b> when far from EBKT.</p><br>
+  <p>Only 1 aircraft may be on an RNP approach and only one may be holding at ARWEF simultaneously.</p><br>
+  <p>For runway <b>06</b>, reporting ARWEF, GIGAD, IKIFE and MINLU is <b>mandatory</b>.</p><br>
+  <p>For runway <b>24</b>, reporting ARWEF, MIRZO and ALFAS is <b>mandatory</b>.</p><br>
+  <p>The RNP for runway 06 is offset by 15° from the extended runway centreline.</p><br>
+  <p>Pilots must report a <b>go-around</b> to EBKT_I_TWR and report overhead ARWEF once again.</p><br>
+  <p>Pilots must report once they have vacated the runway.</p><br><br><br>
+  <h5>Thanks for reading. Happy flying! =)</h5>
+</section>
 
-  <!-- BY TIME -->
-  <div class="panel" id="panel-by-time">
-    <div class="controls">
-      <label for="timeSelect">TIME</label>
-      <select id="timeSelect"></select>
-      <button class="btn" id="loadTime">LOAD</button>
-    </div>
-    <div id="timeResults"></div>
-  </div>
-
-  <div class="panel" id="panel-heatmap">
-  <div class="heatmap-controls">
-    <button class="btn" id="loadHeatmap">LOAD HEATMAP</button>
-    <span style="font-size:0.68rem;letter-spacing:0.15em;color:var(--text-dim);">
-      ALL FIRS · ALL TIMES
-    </span>
-  </div>
-  <div id="heatmapResults"></div>
-  <div class="hm-tooltip" id="hmTooltip">
-    <div class="tt-fir" id="ttFir"></div>
-    <div class="tt-time" id="ttTime"></div>
-    <div class="tt-avg" id="ttAvg"></div>
-    <div class="tt-n" id="ttN"></div>
-  </div>
-</div>
-
-</main>
-
-<footer style="position: fixed; bottom: 0; left: 0; right: 0; border-top: 1px solid var(--border); padding: 18px 32px; text-align: center; font-size: 0.65rem; letter-spacing: 0.2em; color: var(--text-dim); background: var(--bg2);">
-  <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c2b2abaca7a3b2b2aea7a1b0a3b8bba3b482a5afa3abaeeca1adaf">[email&#160;protected]</a>  |  Reach out!
-</footer>
-
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-const API_BASE = "https://vatlog-api-production.up.railway.app";
-
-const FIRS = [
-  "bird","ebbu","edgg","edmm","edww","eett","efin","egpx","egtt","ehaa",
-  "eisn","ekdk","enor","epww","esaa","evrr","eyvl","laaa","lbsr","lccc",
-  "ldzo","lecb","lecm","lfbb","lfee","lfff","lfmm","lfrr","lggg","lhcc",
-  "libb","limm","lirr","ljla","lkaa","lmmm","lovv","lppc","lqsb","lrbb",
-  "lsas","ltbb","luuu","lwss","lyba","lzbb","ukbv","ukdv","ukfv","uklv","ukov"
-];
-
-const FIR_NAMES = {
-  bird:"Reykjavik",ebbu:"Brussels",edgg:"Langen",edmm:"Munich",edww:"Bremen",
-  eett:"Tallinn",efin:"Helsinki",egpx:"Scottish",egtt:"London",ehaa:"Amsterdam",
-  eisn:"Shannon",ekdk:"Copenhagen",enor:"Oslo",epww:"Warsaw",esaa:"Sweden",
-  evrr:"Riga",eyvl:"Vilnius",laaa:"Tirana",lbsr:"Sofia",lccc:"Nicosia",
-  ldzo:"Zagreb",lecb:"Barcelona",lecm:"Madrid",lfbb:"Bordeaux",lfee:"Reims",
-  lfff:"Paris",lfmm:"Marseille",lfrr:"Brest",lggg:"Athens",lhcc:"Budapest",
-  libb:"Brindisi",limm:"Milan",lirr:"Rome",ljla:"Ljubljana",lkaa:"Prague",
-  lmmm:"Malta",lovv:"Vienna",lppc:"Lisbon",lqsb:"Sarajevo",lrbb:"Bucharest",
-  lsas:"Switzerland",ltbb:"Ankara",luuu:"Chisinau",lwss:"Skopje",lyba:"Belgrade",
-  lzbb:"Bratislava",ukbv:"Kyiv",ukdv:"Dnipro",ukfv:"Simferopol",uklv:"Lviv",ukov:"Odesa"
-};
-
-const VALID_TIMES = [
-  "0000","0030","0100","0130","0200","0230","0300","0330","0400","0430",
-  "0500","0530","0600","0630","0700","0730","0800","0830","0900","0930",
-  "1000","1030","1100","1130","1200","1230","1300","1330","1400","1430",
-  "1500","1530","1600","1630","1700","1730","1800","1830","1900","1930",
-  "2000","2030","2100","2130","2200","2230","2300","2330"
-];
-
-// ── Populate selects ──────────────────────────────────────────────────────
-const firSelect = document.getElementById('firSelect');
-FIRS.forEach(f => {
-  const o = document.createElement('option');
-  o.value = f;
-  o.textContent = `${f.toUpperCase()}${FIR_NAMES[f] ? ' — ' + FIR_NAMES[f] : ''}`;
-  firSelect.appendChild(o);
-});
-
-const timeSelect = document.getElementById('timeSelect');
-VALID_TIMES.forEach(t => {
-  const o = document.createElement('option');
-  o.value = t;
-  o.textContent = `${t.slice(0,2)}:${t.slice(2)} UTC`;
-  timeSelect.appendChild(o);
-});
-
-// ── Tabs ──────────────────────────────────────────────────────────────────
-document.querySelectorAll('.tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-    tab.classList.add('active');
-    document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
-  });
-});
-
-const API_KEY = "VatLogAPI";
-
-// ── API helper ────────────────────────────────────────────────────────────
-async function fetchLogs() {
-  const res = await fetch(`${API_BASE}/logs`, {
-    headers: { 'X-API-Key': API_KEY }
-  });
-  if (res.status === 429) throw new Error('RATE_LIMIT');
-  if (res.status === 401 || res.status === 403) throw new Error('AUTH');
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  const data = await res.json();
-  if (!Array.isArray(data)) throw new Error('BAD_FORMAT');
-  return data;
-}
-
-function setStatus(live) {}
-
-function loading(container) {
-  container.innerHTML = `<div class="loading-wrap"><div class="spinner"></div>FETCHING DATA…</div>`;
-}
-
-function errorMsg(container, err) {
-  setStatus(false);
-  let msg = `NETWORK ERROR — ${err.message}`;
-  if (err.message === 'RATE_LIMIT') msg = 'RATE LIMIT EXCEEDED — PLEASE WAIT';
-  if (err.message === 'AUTH')     msg = 'AUTHENTICATION FAILED';
-  container.innerHTML = `<div class="msg error">⚠ ${msg}</div>`;
-}
-
-// ── Bar chart helpers ─────────────────────────────────────────────────────
-function buildTable(rows, colALabel) {
-  // rows: [{key, average, count}]
-  const maxAvg = 20;
-
-  const tbl = document.createElement('table');
-  tbl.className = 'data-table';
-  tbl.innerHTML = `<thead><tr>
-    <th>${colALabel}</th>
-    <th></th>
-    <th>AVG</th>
-    <th>Num. Samples</th>
-  </tr></thead>`;
-  const tbody = document.createElement('tbody');
-
-  rows.forEach((r, i) => {
-    const tr = document.createElement('tr');
-    if (!r.average) tr.classList.add('zero-row');
-    const pct = r.average ? (r.average / maxAvg * 100) : 0;
-    tr.innerHTML = `
-      <td class="col-key">${r.key}</td>
-      <td class="col-bar"><div class="bar-outer"><div class="bar-inner" data-pct="${pct.toFixed(1)}"></div></div></td>
-      <td class="col-avg">${r.average ? r.average.toFixed(2) : '—'}</td>
-      <td class="col-n">${r.count ? `${r.count}` : ''}</td>
-    `;
-    tbody.appendChild(tr);
-  });
-
-  tbl.appendChild(tbody);
-
-  // Animate bars after a tick
-  requestAnimationFrame(() => {
-    tbl.querySelectorAll('.bar-inner').forEach(b => {
-      b.style.width = b.dataset.pct + '%';
-    });
-  });
-
-  return tbl;
-}
-
-function statBoxes(rows) {
-  const nonZero = rows.filter(r => r.average && r.count);
-  const totalN = nonZero.reduce((s,r) => s + r.count, 0);
-  const peak = nonZero.length ? nonZero.reduce((a,b) => a.average > b.average ? a : b) : null;
-  const globalAvg = nonZero.length ? (nonZero.reduce((s,r) => s + r.average * r.count, 0) / totalN) : 0;
-
-  return `<div class="stats-row">
-    <div class="stat-box">
-      <div class="stat-label">Samples Taken</div>
-      <div class="stat-val">${totalN}</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-label">Full Average</div>
-      <div class="stat-val">${globalAvg.toFixed(1)}</div>
-    </div>
-    ${peak ? `<div class="stat-box">
-      <div class="stat-label">Highest - ${peak.key}</div>
-      <div class="stat-val">${peak.average.toFixed(1)}</div>
-    </div>` : ''}
-  </div>`;
-}
-
-// ── Load by FIR ───────────────────────────────────────────────────────────
-document.getElementById('loadFir').addEventListener('click', async () => {
-  const btn = document.getElementById('loadFir');
-  const container = document.getElementById('firResults');
-  const fir = firSelect.value;
-  btn.disabled = true;
-  loading(container);
-
-  try {
-    const entries = await fetchLogs();
-    setStatus(true);
-
-    const rows = VALID_TIMES.map(t => {
-      const match = entries.find(e => e.fir === fir && e.time === t);
-      return {
-        key: `${t.slice(0,2)}:${t.slice(2)}`,
-        average: match && match.count > 0 ? match.average : 0,
-        count: match ? match.count : 0
-      };
-    });
-
-    const name = FIR_NAMES[fir] ? ` — ${FIR_NAMES[fir]}` : '';
-    container.innerHTML = `
-      <div class="result-header">
-        <div class="result-title">${fir.toUpperCase()}${name}</div>
-        <div class="result-meta">ALL TIME SLOTS · UTC</div>
-      </div>
-      ${statBoxes(rows)}
-    `;
-    container.appendChild(buildTable(rows, 'TIME'));
-
-  } catch(e) {
-    errorMsg(container, e);
-  } finally {
-    btn.disabled = false;
-  }
-});
-
-// ── Load by Time ──────────────────────────────────────────────────────────
-document.getElementById('loadTime').addEventListener('click', async () => {
-  const btn = document.getElementById('loadTime');
-  const container = document.getElementById('timeResults');
-  const time = timeSelect.value;
-  btn.disabled = true;
-  loading(container);
-
-  try {
-    const entries = await fetchLogs();
-    setStatus(true);
-
-    const rows = FIRS.map(f => {
-      const match = entries.find(e => e.fir === f && e.time === time);
-      return {
-        key: f.toUpperCase(),
-        label: FIR_NAMES[f] || '',
-        average: match && match.count > 0 ? match.average : 0,
-        count: match ? match.count : 0
-      };
-    });
-
-    container.innerHTML = `
-      <div class="result-header">
-        <div class="result-title">${time.slice(0,2)}:${time.slice(2)} UTC</div>
-        <div class="result-meta">ALL FIRS · ${rows.filter(r=>r.count).length} WITH DATA</div>
-      </div>
-      ${statBoxes(rows)}
-    `;
-    container.appendChild(buildTable(rows, 'FIR'));
-
-  } catch(e) {
-    errorMsg(container, e);
-  } finally {
-    btn.disabled = false;
-  }
-});
-</script>
 <script>
-(function () {
-  const MAX_AVG = 20;
- 
-  // Colour scale: 0 → white/bg, mid → soft blue, max → brand blue
-  function cellColor(avg) {
-    if (!avg) return 'var(--bg3)';
-    const t = Math.pow(Math.min(avg / MAX_AVG, 1), 0.6);
-    const r = Math.round(240 + (47  - 240) * t);
-    const g = Math.round(244 + (69  - 244) * t);
-    const b = Math.round(255 + (184 - 255) * t);
-    return `rgb(${r},${g},${b})`;
-  }
- 
-  function buildHeatmap(entries) {
-    const container = document.getElementById('heatmapResults');
- 
-    // Build lookup: "fir|time" → {average, count}
-    const lookup = {};
-    entries.forEach(e => { lookup[`${e.fir}|${e.time}`] = e; });
- 
-    const table = document.createElement('table');
-    table.className = 'heatmap-table';
- 
-    // ── THEAD: time labels (every 2 hours to keep it readable) ──
-    const thead = document.createElement('thead');
-    const headerRow = document.createElement('tr');
-    headerRow.innerHTML = '<th></th>'; // blank corner
-    VALID_TIMES.forEach((t, i) => {
-      const th = document.createElement('th');
-      // show label every 4 slots (= every 2 hours)
-      th.textContent = (i % 4 === 0) ? t.slice(0, 2) : '';
-      headerRow.appendChild(th);
-    });
-    thead.appendChild(headerRow);
-    table.appendChild(thead);
- 
-    // ── TBODY: one row per FIR ──
-    const tbody = document.createElement('tbody');
-    FIRS.forEach(fir => {
-      const tr = document.createElement('tr');
- 
-      // FIR label
-      const th = document.createElement('th');
-      th.className = 'hm-fir-label';
-      th.textContent = fir.toUpperCase();
-      th.title = FIR_NAMES[fir] || fir.toUpperCase();
-      th.addEventListener('click', () => {
-        // Jump to By FIR tab with this FIR selected
-        document.getElementById('firSelect').value = fir;
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-        document.querySelector('[data-tab="by-fir"]').classList.add('active');
-        document.getElementById('panel-by-fir').classList.add('active');
-        document.getElementById('loadFir').click();
-      });
-      tr.appendChild(th);
- 
-      // One cell per time slot
-      VALID_TIMES.forEach(t => {
-        const td = document.createElement('td');
-        const key = `${fir}|${t}`;
-        const d = lookup[key];
-        const avg = d && d.count > 0 ? d.average : 0;
-        const noSamples = !d || d.count === 0;
-        td.className = noSamples ? 'hm-cell hm-cell--zero' : 'hm-cell';
-        td.style.background = noSamples ? '' : cellColor(avg);
-        td.dataset.fir  = fir;
-        td.dataset.time = t;
-        td.dataset.avg  = avg ? avg.toFixed(2) : '0';
-        td.dataset.n    = d ? d.count : '0';
-        tr.appendChild(td);
-      });
- 
-      tbody.appendChild(tr);
-    });
-    table.appendChild(tbody);
- 
-    // ── Legend ──
-    container.innerHTML = '';
-    const wrap = document.createElement('div');
-    wrap.className = 'heatmap-wrap';
-    wrap.appendChild(table);
-    container.appendChild(wrap);
-    container.insertAdjacentHTML('beforeend', `
-      <div class="hm-legend">
-        <span>0</span>
-        <div class="hm-legend-bar"></div>
-        <span>${MAX_AVG}+ controllers</span>
-      </div>
-    `);
- 
-    // ── Tooltip ──
-    const tooltip = document.getElementById('hmTooltip');
-    table.addEventListener('mousemove', e => {
-      const cell = e.target.closest('.hm-cell');
-      if (!cell) { tooltip.style.display = 'none'; return; }
-      const fir  = cell.dataset.fir;
-      const time = cell.dataset.time;
-      const avg  = parseFloat(cell.dataset.avg);
-      const n    = parseInt(cell.dataset.n);
-      document.getElementById('ttFir').textContent  = `${fir.toUpperCase()}${FIR_NAMES[fir] ? ' — ' + FIR_NAMES[fir] : ''}`;
-      document.getElementById('ttTime').textContent = `${time.slice(0,2)}:${time.slice(2)} UTC`;
-      document.getElementById('ttAvg').textContent  = avg ? `Avg: ${avg.toFixed(2)} controllers` : 'No data';
-      document.getElementById('ttN').textContent    = n   ? `${n} samples` : '';
-      tooltip.style.display = 'block';
-      tooltip.style.left = (e.clientX + 14) + 'px';
-      tooltip.style.top  = (e.clientY - 10) + 'px';
-    });
-    table.addEventListener('mouseleave', () => { tooltip.style.display = 'none'; });
- 
-    // Click cell → jump to By Time tab
-    table.addEventListener('click', e => {
-      const cell = e.target.closest('.hm-cell');
-      if (!cell) return;
-      document.getElementById('timeSelect').value = cell.dataset.time;
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-      document.querySelector('[data-tab="by-time"]').classList.add('active');
-      document.getElementById('panel-by-time').classList.add('active');
-      document.getElementById('loadTime').click();
-    });
-  }
- 
-  document.getElementById('loadHeatmap').addEventListener('click', async () => {
-    const btn = document.getElementById('loadHeatmap');
-    const container = document.getElementById('heatmapResults');
-    btn.disabled = true;
-    container.innerHTML = `<div class="loading-wrap"><div class="spinner"></div>BUILDING HEATMAP…</div>`;
-
-    try {
-      const entries = await fetchLogs();
-      setStatus(true);
-      buildHeatmap(entries);
-    } catch(e) {
-      errorMsg(container, e);
-    } finally {
-      btn.disabled = false;
+  const navEl = document.getElementById('nav');
+  navEl.addEventListener('transitionend', () => {
+    if (!navEl.classList.contains('open')) {
+      navEl.style.display = 'none';
     }
   });
 
-})();
+  function goTo(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    navEl.classList.remove('open');
+  }
+
+  function toggleNav() {
+    const nav = document.getElementById('nav');
+    if (nav.classList.contains('open')) {
+      nav.classList.remove('open');
+    } else {
+      nav.style.display = 'flex';
+      requestAnimationFrame(() => nav.classList.add('open'));
+    }
+  }
 </script>
+
 </body>
 </html>
